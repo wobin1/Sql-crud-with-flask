@@ -101,6 +101,20 @@ def update_person(id):
     
     return "You have succesfully updated your record"
 
+@app.route("/delete_person/<id>", methods=["DELETE"])
+def delete_person(id):
+    conn = getconnection('osm', 'beta', 'password', '127.0.0.1', '5432') 
+    cursor = conn.cursor()
+    if request.method=="DELETE":
+        data = json.loads(request.data, strict=False)
+        cursor.execute("DELETE FROM PERSON where id=%s",  id )
+        conn.commit()
+        conn.close()
+        
+    return "You have succesfully deleted your record"
+
+
+
 
 
 
